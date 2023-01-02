@@ -52,6 +52,7 @@ public class MqttClientBackgroundService : BackgroundService
     {
         var mqttClientOptions = new MqttClientOptionsBuilder()
                                 .WithTcpServer("localhost")
+                                .WithClientId(AppDomain.CurrentDomain.FriendlyName)
                                 //will error
                                 // .WithProtocolVersion(MqttProtocolVersion.Unknown)
                                 //is default
