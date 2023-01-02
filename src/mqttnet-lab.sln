@@ -7,9 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "broker", "broker", "{2E635A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{E5B9AC3C-FA8A-4283-9387-D473DE5D648B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.publish", "mqttnet.publish\mqttnet.publish.csproj", "{D6327DCA-D154-4D13-8946-72CCE1213C28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.publisher", "mqttnet.publisher\mqttnet.publisher.csproj", "{D6327DCA-D154-4D13-8946-72CCE1213C28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.subscribe", "mqttnet.subscribe\mqttnet.subscribe.csproj", "{D00575C6-2AD5-45A0-9493-E9C16FF75A5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.subscriber", "mqttnet.subscriber\mqttnet.subscriber.csproj", "{D00575C6-2AD5-45A0-9493-E9C16FF75A5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
