@@ -38,6 +38,7 @@ app.UseMqttServer(server =>
 {
     var requiredService = app.Services.GetRequiredService<MqttEvents>();
 
+    server.InterceptingPublishAsync += requiredService.OnInterceptingPublish;
     server.ClientConnectedAsync += requiredService.OnClientConnected;
     server.ClientDisconnectedAsync += requiredService.OnClientDisconnected;
     server.ValidatingConnectionAsync += requiredService.ValidateConnection;
@@ -52,9 +53,17 @@ internal sealed class MqttEvents
         Console.WriteLine($"Client '{eventArgs.ClientId}' connected.");
         return Task.CompletedTask;
     }
+
     public Task OnClientDisconnected(ClientDisconnectedEventArgs eventArgs)
     {
         Console.WriteLine($"Client '{eventArgs.ClientId}' disconnected.");
+        return Task.CompletedTask;
+    }
+
+    public Task OnInterceptingPublish(InterceptingPublishEventArgs eventArgs)
+    {
+        Console.WriteLine(
+            $"Client '{eventArgs.ClientId}' publish: {eventArgs.ApplicationMessage.Topic}:{eventArgs.ApplicationMessage.Payload}");
         return Task.CompletedTask;
     }
 
