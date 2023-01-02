@@ -1,8 +1,6 @@
-﻿using MQTTnet;
-using MQTTnet.Client;
-using MQTTnet.Formatter;
+﻿using MQTTnet.Client;
 
-namespace mqttnet.subscriber.BackgroundServices;
+namespace mqttnet.publisher.BackgroundServices;
 
 /// <summary>
 /// Mqtt Client 背景連線服務，讓這個 asp net core server 建立訂閱
@@ -10,10 +8,12 @@ namespace mqttnet.subscriber.BackgroundServices;
 public class MqttClientBackgroundService : BackgroundService
 {
     private readonly IMqttClient _mqttClient;
+    private readonly MqttClientOptions _options;
 
-    public MqttClientBackgroundService(IMqttClient mqttClient)
+    public MqttClientBackgroundService(IMqttClient mqttClient, MqttClientOptions options)
     {
         this._mqttClient = mqttClient;
+        this._options = options;
     }
 
     /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
@@ -50,18 +50,18 @@ public class MqttClientBackgroundService : BackgroundService
     /// </remarks>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var mqttClientOptions = new MqttClientOptionsBuilder()
-                                .WithTcpServer("localhost")
-                                .WithClientId(AppDomain.CurrentDomain.FriendlyName)
-                                //will error
-                                // .WithProtocolVersion(MqttProtocolVersion.Unknown)
-                                //is default
-                                // .WithProtocolVersion(MqttProtocolVersion.V311)
-                                //if need to change
-                                // .WithProtocolVersion(MqttProtocolVersion.V310)
-                                // .WithProtocolVersion(MqttProtocolVersion.V500)
-                                .Build();
+        // var mqttClientOptions = new MqttClientOptionsBuilder()
+        //                         .WithTcpServer("localhost")
+        //                         .WithClientId(AppDomain.CurrentDomain.FriendlyName)
+        //                         //will error
+        //                         // .WithProtocolVersion(MqttProtocolVersion.Unknown)
+        //                         //is default
+        //                         // .WithProtocolVersion(MqttProtocolVersion.V311)
+        //                         //if need to change
+        //                         // .WithProtocolVersion(MqttProtocolVersion.V310)
+        //                         // .WithProtocolVersion(MqttProtocolVersion.V500)
+        //                         .Build();
 
-        await this._mqttClient.ConnectAsync(mqttClientOptions, stoppingToken);
+        await this._mqttClient.ConnectAsync(this._options, stoppingToken);
     }
 }
