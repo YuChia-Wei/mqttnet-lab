@@ -61,26 +61,6 @@ public class MqttClientBackgroundService : BackgroundService
                                 // .WithProtocolVersion(MqttProtocolVersion.V500)
                                 .Build();
 
-        this._mqttClient.ApplicationMessageReceivedAsync += e =>
-        {
-            Console.WriteLine($"{e.ApplicationMessage.Topic}:{e.ApplicationMessage.ConvertPayloadToString()}");
-            return Task.CompletedTask;
-        };
-
         await this._mqttClient.ConnectAsync(mqttClientOptions, stoppingToken);
-
-        var mqttSubscribeOptions = new MqttClientSubscribeOptionsBuilder()
-                                   .WithTopicFilter(mqttTopicFilterBuilder =>
-                                   {
-                                       mqttTopicFilterBuilder.WithTopic("test/*/");
-                                   })
-                                   //if need add other topic subscribe
-                                   // .WithTopicFilter(mqttTopicFilterBuilder =>
-                                   // {
-                                   //     mqttTopicFilterBuilder.WithTopic("test");
-                                   // })
-                                   .Build();
-
-        await this._mqttClient.SubscribeAsync(mqttSubscribeOptions);
     }
 }
