@@ -1,11 +1,24 @@
-﻿using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using MQTTnet.Client;
 
-namespace mqttnet.publisher.Extensions;
+namespace MQTTnet.AspNetCore.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddMqttClientOptions(
+    public static IServiceCollection AddMqttClient(
+        this IServiceCollection serviceCollection,
+        Action<IServiceProvider, MqttClientOptionsBuilder>? optionsAction)
+    {
+        serviceCollection.TryAddSingleton(new MqttFactory());
+        serviceCollection.TryAddSingleton<IMqttClient>(provider => provider.GetRequiredService<MqttFactory>()
+                                                                           .CreateMqttClient());
+        AddMqttClientOptions(serviceCollection, optionsAction);
+
+        return serviceCollection;
+    }
+
+    private static IServiceCollection AddMqttClientOptions(
         this IServiceCollection serviceCollection,
         Action<IServiceProvider, MqttClientOptionsBuilder>? optionsAction)
     {

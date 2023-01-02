@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.publisher", "mqttne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.subscriber", "mqttnet.subscriber\mqttnet.subscriber.csproj", "{D00575C6-2AD5-45A0-9493-E9C16FF75A5F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{505CBEAD-3D57-4E9F-9163-B48603C7431A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTnet.AspNetCore.DependencyInjection", "MQTTnet.AspNetCore.DependencyInjection\MQTTnet.AspNetCore.DependencyInjection.csproj", "{BC7AC7BB-0F15-4E98-BDD7-B9D07FDBEC22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTnet.AspNetCore.BackgroundServices", "MQTTnet.AspNetCore.BackgroundServices\MQTTnet.AspNetCore.BackgroundServices.csproj", "{35971931-A687-4D48-AB7F-9C75C91E1A2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +39,20 @@ Global
 		{D00575C6-2AD5-45A0-9493-E9C16FF75A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D00575C6-2AD5-45A0-9493-E9C16FF75A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D00575C6-2AD5-45A0-9493-E9C16FF75A5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC7AC7BB-0F15-4E98-BDD7-B9D07FDBEC22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC7AC7BB-0F15-4E98-BDD7-B9D07FDBEC22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC7AC7BB-0F15-4E98-BDD7-B9D07FDBEC22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC7AC7BB-0F15-4E98-BDD7-B9D07FDBEC22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35971931-A687-4D48-AB7F-9C75C91E1A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35971931-A687-4D48-AB7F-9C75C91E1A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35971931-A687-4D48-AB7F-9C75C91E1A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35971931-A687-4D48-AB7F-9C75C91E1A2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{53329272-C5C2-4984-8E49-34EBED047099} = {2E635A32-310A-4D56-B6A6-C1E39C317E8F}
 		{D6327DCA-D154-4D13-8946-72CCE1213C28} = {E5B9AC3C-FA8A-4283-9387-D473DE5D648B}
 		{D00575C6-2AD5-45A0-9493-E9C16FF75A5F} = {E5B9AC3C-FA8A-4283-9387-D473DE5D648B}
+		{BC7AC7BB-0F15-4E98-BDD7-B9D07FDBEC22} = {505CBEAD-3D57-4E9F-9163-B48603C7431A}
+		{35971931-A687-4D48-AB7F-9C75C91E1A2E} = {505CBEAD-3D57-4E9F-9163-B48603C7431A}
 	EndGlobalSection
 EndGlobal

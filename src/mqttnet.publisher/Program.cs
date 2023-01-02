@@ -1,16 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using MQTTnet;
+using MQTTnet.AspNetCore.BackgroundServices;
+using MQTTnet.AspNetCore.DependencyInjection;
 using MQTTnet.Client;
 using mqttnet.publisher;
-using mqttnet.publisher.BackgroundServices;
-using mqttnet.publisher.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.TryAddSingleton(new MqttFactory());
-builder.Services.TryAddSingleton<IMqttClient>(provider => provider.GetRequiredService<MqttFactory>().CreateMqttClient());
-builder.Services.AddMqttClientOptions((provider, clientOptionBuilder) =>
+builder.Services.AddMqttClient((_, clientOptionBuilder) =>
 {
     clientOptionBuilder.WithTcpServer("localhost")
                        .WithClientId(AppDomain.CurrentDomain.FriendlyName);
@@ -22,7 +19,8 @@ builder.Services.AddMqttClientOptions((provider, clientOptionBuilder) =>
     // .WithProtocolVersion(MqttProtocolVersion.V310)
     // .WithProtocolVersion(MqttProtocolVersion.V500)
 });
-builder.Services.AddHostedService<MqttClientBackgroundService>();
+
+builder.Services.AddMqttBackgroundConnectService();
 
 var app = builder.Build();
 

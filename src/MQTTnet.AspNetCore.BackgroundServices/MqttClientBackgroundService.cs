@@ -1,6 +1,7 @@
-﻿using MQTTnet.Client;
+﻿using Microsoft.Extensions.Hosting;
+using MQTTnet.Client;
 
-namespace mqttnet.publisher.BackgroundServices;
+namespace MQTTnet.AspNetCore.BackgroundServices;
 
 /// <summary>
 /// Mqtt Client 背景連線服務，讓這個 asp net core server 建立訂閱
