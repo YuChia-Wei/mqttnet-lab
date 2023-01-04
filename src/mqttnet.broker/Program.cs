@@ -1,5 +1,7 @@
 using MQTTnet.AspNetCore;
+using mqttnet.broker.BackgroundServices;
 using mqttnet.broker.Events;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,17 @@ builder.Services.AddMqttServer();
 builder.Services.AddConnections();
 
 builder.Services.AddSingleton<MqttEvents>();
+
+// builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(builder.Configuration.GetValue<string>("RedisConnection")));
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost:6379"));
+// builder.Services.AddStackExchangeRedisCache(options =>
+// {
+//     // options.Configuration = builder.Configuration.GetConnectionString("redis");
+//     options.Configuration = "localhost:6379";
+//     options.InstanceName = $"{AppDomain.CurrentDomain.FriendlyName}";
+// });
+
+builder.Services.AddHostedService<RedisMessagingBackgroundService>();
 
 var app = builder.Build();
 
