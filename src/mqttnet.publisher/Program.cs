@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using MQTTnet;
-using MQTTnet.AspNetCore.BackgroundServices;
-using MQTTnet.AspNetCore.DependencyInjection;
 using MQTTnet.Client;
 using mqttnet.publisher;
 
@@ -9,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMqttClient((_, clientOptionBuilder) =>
 {
-    clientOptionBuilder.WithTcpServer("localhost")
+    clientOptionBuilder.WithTcpServer(Environment.GetEnvironmentVariable("broker"))
                        .WithClientId(AppDomain.CurrentDomain.FriendlyName);
     //will error
     // .WithProtocolVersion(MqttProtocolVersion.Unknown)

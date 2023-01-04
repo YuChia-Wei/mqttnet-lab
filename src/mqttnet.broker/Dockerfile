@@ -8,16 +8,16 @@ EXPOSE 1883
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["mqtt.broker.csproj", "./"]
-RUN dotnet restore "mqtt.broker.csproj"
+COPY ["mqttnet.broker.csproj", "./"]
+RUN dotnet restore "mqttnet.broker.csproj"
 COPY . .
 WORKDIR "/src/"
-RUN dotnet build "mqtt.broker.csproj" -c Release -o /app/build
+RUN dotnet build "mqttnet.broker.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "mqtt.broker.csproj" -c Release -o /app/publish
+RUN dotnet publish "mqttnet.broker.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "mqtt.broker.dll"]
+ENTRYPOINT ["dotnet", "mqttnet.broker.dll"]

@@ -31,11 +31,19 @@ internal sealed class MqttEvents
     {
         Console.WriteLine(
             $"Client '{eventArgs.ClientId}' publish: {eventArgs.ApplicationMessage.Topic}:{eventArgs.ApplicationMessage.ConvertPayloadToString()}");
+        
+        if (eventArgs.ApplicationMessage.Topic.EndsWith("_sync"))
+        {
+            eventArgs.ApplicationMessage.Topic = eventArgs.ApplicationMessage.Topic.Replace("_sync", "");
+            Console.WriteLine(
+                $"Pass : Client '{eventArgs.ClientId}' publish: {eventArgs.ApplicationMessage.Topic}:{eventArgs.ApplicationMessage.ConvertPayloadToString()}");
+            return Task.CompletedTask;
+        }
 
         var mqttSyncData = new MqttSyncData()
         {
             OriginPublisher = eventArgs.ClientId,
-            OriginBroker = Environment.MachineName,
+            OriginBroker = Environment.GetEnvironmentVariable("host"),
             ApplicationMessage = eventArgs.ApplicationMessage
         };
 
@@ -71,6 +79,6 @@ internal record MqttSyncData
 
     public bool IsSameBroker()
     {
-        return this.OriginBroker == Environment.MachineName;
+        return this.OriginBroker == Environment.GetEnvironmentVariable("host");
     }
 }

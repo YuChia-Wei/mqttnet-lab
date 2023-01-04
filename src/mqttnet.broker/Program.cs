@@ -13,7 +13,7 @@ builder.WebHost.ConfigureKestrel(options =>
     // options.ListenAnyIP(1883, listenOptions =>listenOptions.UseConnectionHandler<MqttConnectionHandler>());
 
     // link = wss://{host}:64430
-    options.ListenAnyIP(64430, listenOptions => listenOptions.UseHttps());
+    // options.ListenAnyIP(64430, listenOptions => listenOptions.UseHttps());
 
     // link = ws://{host}:4430
     options.ListenAnyIP(4430);
@@ -29,7 +29,7 @@ builder.Services.AddConnections();
 builder.Services.AddSingleton<MqttEvents>();
 
 // builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(builder.Configuration.GetValue<string>("RedisConnection")));
-builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost:6379"));
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("redis_center:6379"));
 // builder.Services.AddStackExchangeRedisCache(options =>
 // {
 //     // options.Configuration = builder.Configuration.GetConnectionString("redis");

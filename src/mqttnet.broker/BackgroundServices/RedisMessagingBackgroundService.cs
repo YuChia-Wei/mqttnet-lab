@@ -64,6 +64,7 @@ public class RedisMessagingBackgroundService : BackgroundService
                     return;
                 }
 
+                mqttSyncData.ApplicationMessage.Topic += "_sync";
                 var injectedMqttApplicationMessage = new InjectedMqttApplicationMessage(mqttSyncData.ApplicationMessage)
                 {
                     SenderClientId = mqttSyncData.OriginPublisher

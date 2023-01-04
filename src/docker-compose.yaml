@@ -1,0 +1,61 @@
+﻿version: '3.5'
+services:
+  broker_1:
+    container_name: broker-1
+    image: mqttnet-broker:b1
+    build:
+      context: mqttnet.broker
+      dockerfile: Dockerfile
+    networks:
+      - mqttnet
+    environment:
+      - host=broker_1
+    depends_on:
+      - redis_center
+  broker_2:
+    container_name: broker-2
+    image: mqttnet-broker:b2
+    build:
+      context: mqttnet.broker
+      dockerfile: Dockerfile
+    environment:
+      - host=broker_2
+    networks:
+      - mqttnet
+    depends_on:
+      - redis_center
+  publisher-1:
+    container_name: publisher-1
+    image: mqttnet-publisher:p1
+    environment:
+      - broker=broker_1
+    build:
+      context: mqttnet.publisher
+      dockerfile: Dockerfile
+    ports:
+      - "7227:80"
+    networks:
+      - mqttnet
+    depends_on:
+      - broker_1
+  publisher-2:
+    container_name: publisher-2
+    image: mqttnet-publisher:p2
+    environment:
+      - broker=broker_2
+    build:
+      context: mqttnet.publisher
+      dockerfile: Dockerfile
+    ports:
+      - "7228:80"
+    networks:
+      - mqttnet
+    depends_on:
+      - broker_2
+  redis_center:
+    image: redis
+    networks:
+      - mqttnet
+networks:
+    mqttnet:
+      driver: bridge
