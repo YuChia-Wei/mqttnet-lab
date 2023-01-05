@@ -14,12 +14,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MQTTnet" Version="4.1.4.563" />
-      <PackageReference Include="MQTTnet.AspNetCore" Version="4.1.4.563" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\MQTTnet.AspNetCore.Server.ClusterQueue\MQTTnet.AspNetCore.Server.ClusterQueue.csproj" />
+        <PackageReference Include="MQTTnet" Version="4.1.4.563" />
+        <PackageReference Include="MQTTnet.AspNetCore" Version="4.1.4.563" />
     </ItemGroup>
 
 </Project>

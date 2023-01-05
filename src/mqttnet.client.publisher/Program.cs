@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using MQTTnet;
+using MQTTnet.AspNetCore.Client.BackgroundServices;
+using MQTTnet.AspNetCore.Client.DependencyInjection;
 using MQTTnet.Client;
-using mqttnet.publisher;
+using mqttnet.client.publisher;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMqttClient((_, clientOptionBuilder) =>
 {
     clientOptionBuilder.WithTcpServer(Environment.GetEnvironmentVariable("broker"))
-                       .WithClientId(AppDomain.CurrentDomain.FriendlyName);
+                       .WithClientId(Environment.MachineName);
+                       // .WithClientId(AppDomain.CurrentDomain.FriendlyName);
     //will error
     // .WithProtocolVersion(MqttProtocolVersion.Unknown)
     //is default
@@ -37,7 +40,7 @@ app.MapPut("/publish", async (
 
 app.Run();
 
-namespace mqttnet.publisher
+namespace mqttnet.client.publisher
 {
     public record MqttData
     {

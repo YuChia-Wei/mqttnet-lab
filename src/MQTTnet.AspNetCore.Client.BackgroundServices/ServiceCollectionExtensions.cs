@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace MQTTnet.AspNetCore.BackgroundServices;
+namespace MQTTnet.AspNetCore.Client.BackgroundServices;
 
 public static class ServiceCollectionExtensions
 {

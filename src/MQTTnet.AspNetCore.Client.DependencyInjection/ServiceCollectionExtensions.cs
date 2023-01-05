@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
 
-namespace MQTTnet.AspNetCore.DependencyInjection;
+namespace MQTTnet.AspNetCore.Client.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {

@@ -4,22 +4,22 @@ services:
     container_name: broker-1
     image: mqttnet-broker:b1
     build:
-      context: mqttnet.broker
-      dockerfile: Dockerfile
+      context: ../src
+      dockerfile: mqttnet.broker/Dockerfile
     networks:
       - mqttnet
     environment:
-      - host=broker_1
+      - RedisConnection=redis_center:6379
     depends_on:
       - redis_center
   broker_2:
     container_name: broker-2
     image: mqttnet-broker:b2
     build:
-      context: mqttnet.broker
-      dockerfile: Dockerfile
+      context: ../src
+      dockerfile: mqttnet.broker/Dockerfile
     environment:
-      - host=broker_2
+      - RedisConnection=redis_center:6379
     networks:
       - mqttnet
     depends_on:
@@ -30,8 +30,8 @@ services:
     environment:
       - broker=broker_1
     build:
-      context: mqttnet.publisher
-      dockerfile: Dockerfile
+      context: ../src
+      dockerfile: mqttnet.client.publisher/Dockerfile
     ports:
       - "7227:80"
     networks:
@@ -44,8 +44,8 @@ services:
     environment:
       - broker=broker_2
     build:
-      context: mqttnet.publisher
-      dockerfile: Dockerfile
+      context: ../src
+      dockerfile: mqttnet.client.publisher/Dockerfile
     ports:
       - "7228:80"
     networks:

@@ -1,26 +1,27 @@
 ﻿using Microsoft.Extensions.Hosting;
 using MQTTnet.Client;
+using MQTTnet.Extensions.ManagedClient;
 
-namespace MQTTnet.AspNetCore.BackgroundServices;
+namespace MQTTnet.AspNetCore.Client.BackgroundServices;
 
 /// <summary>
 /// Mqtt Client 背景連線服務，讓這個 asp net core server 建立訂閱
 /// </summary>
-public class MqttClientBackgroundService : BackgroundService
+public class ManagedMqttClientBackgroundService : BackgroundService
 {
-    private readonly IMqttClient _mqttClient;
-    private readonly MqttClientOptions _options;
+    private readonly IManagedMqttClient _managedMqttClient;
+    private readonly ManagedMqttClientOptions _options;
 
-    public MqttClientBackgroundService(IMqttClient mqttClient, MqttClientOptions options)
+    public ManagedMqttClientBackgroundService(IManagedMqttClient managedMqttClient, ManagedMqttClientOptions options)
     {
-        this._mqttClient = mqttClient;
+        this._managedMqttClient = managedMqttClient;
         this._options = options;
     }
 
     /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
     public override void Dispose()
     {
-        this._mqttClient.Dispose();
+        this._managedMqttClient.Dispose();
         base.Dispose();
     }
 
@@ -30,7 +31,7 @@ public class MqttClientBackgroundService : BackgroundService
     /// <param name="cancellationToken">Indicates that the shutdown process should no longer be graceful.</param>
     public override Task StopAsync(CancellationToken cancellationToken)
     {
-        this._mqttClient.DisconnectAsync();
+        this._managedMqttClient.StopAsync();
 
         return base.StopAsync(cancellationToken);
     }
@@ -49,7 +50,7 @@ public class MqttClientBackgroundService : BackgroundService
     /// See <see href="https://docs.microsoft.com/dotnet/core/extensions/workers">Worker Services in .NET</see> for
     /// implementation guidelines.
     /// </remarks>
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         // var mqttClientOptions = new MqttClientOptionsBuilder()
         //                         .WithTcpServer("localhost")
@@ -63,6 +64,6 @@ public class MqttClientBackgroundService : BackgroundService
         //                         // .WithProtocolVersion(MqttProtocolVersion.V500)
         //                         .Build();
 
-        await this._mqttClient.ConnectAsync(this._options, stoppingToken);
+        return this._managedMqttClient.StartAsync(this._options);
     }
 }

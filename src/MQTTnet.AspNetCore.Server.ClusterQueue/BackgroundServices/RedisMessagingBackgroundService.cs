@@ -1,9 +1,13 @@
-﻿using System.Text.Json;
-using mqttnet.broker.Events;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using MQTTnet.AspNetCore.Server.ClusterQueue.Infrastructure;
 using MQTTnet.Server;
 using StackExchange.Redis;
 
-namespace mqttnet.broker.BackgroundServices;
+namespace MQTTnet.AspNetCore.Server.ClusterQueue.BackgroundServices;
 
 /// <summary>
 /// Mqtt Client 背景連線服務，讓這個 asp net core server 建立訂閱
@@ -22,13 +26,6 @@ public class RedisMessagingBackgroundService : BackgroundService
         this._connectionMultiplexer = connectionMultiplexer;
         this._logger = logger;
         this._mqttServer = mqttServer;
-    }
-
-    /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-    public override void Dispose()
-    {
-        this._connectionMultiplexer.Dispose();
-        base.Dispose();
     }
 
     /// <summary>
@@ -50,7 +47,7 @@ public class RedisMessagingBackgroundService : BackgroundService
         this._connectionMultiplexer.GetSubscriber()
             .SubscribeAsync($"{AppDomain.CurrentDomain.FriendlyName}:MqttSync", (channel, message) =>
             {
-                var mqttSyncData = JsonSerializer.Deserialize<MqttSyncData>(message);
+                var mqttSyncData = MqttClusterQueueEntity.Deserialize(message);
 
                 if (mqttSyncData == null)
                 {
@@ -64,19 +61,23 @@ public class RedisMessagingBackgroundService : BackgroundService
                     return;
                 }
 
-                mqttSyncData.ApplicationMessage.Topic += "_sync";
-                var injectedMqttApplicationMessage = new InjectedMqttApplicationMessage(mqttSyncData.ApplicationMessage)
-                {
-                    SenderClientId = mqttSyncData.OriginPublisher
-                };
-                this._mqttServer.InjectApplicationMessage(injectedMqttApplicationMessage, stoppingToken);
-                
-                this._logger.LogInformation((string)message ?? "");
+                this.PublishFromBroker(mqttSyncData, stoppingToken);
             });
 
         stoppingToken.Register(
             () => this._logger.LogInformation($"{AppDomain.CurrentDomain.FriendlyName} background task is stopping."));
 
         return Task.CompletedTask;
+    }
+
+    private void PublishFromBroker(MqttClusterQueueEntity mqttClusterQueueEntity, CancellationToken stoppingToken)
+    {
+        var injectedMqttApplicationMessage = mqttClusterQueueEntity.CreateInjectedMqttApplicationMessage();
+
+        this._mqttServer.InjectApplicationMessage(injectedMqttApplicationMessage, stoppingToken);
+
+        this._logger.LogInformation(
+            $"SenderClient '{injectedMqttApplicationMessage.SenderClientId}' " +
+            $"publish sync topic: {injectedMqttApplicationMessage.ApplicationMessage.Topic}");
     }
 }
