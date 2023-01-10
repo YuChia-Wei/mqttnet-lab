@@ -62,6 +62,6 @@ app.UseInterceptingPublishEvent(eventArgs =>
     return Task.CompletedTask;
 });
 
-app.UseMqttClusterQueueRedisDb();
+app.UseRedisMqttServerCluster();
 
 app.Run();

@@ -7,7 +7,7 @@ namespace MQTTnet.AspNetCore.Server.Cluster.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
-    public static IApplicationBuilder UseMqttClusterQueueRedisDb(this IApplicationBuilder app)
+    public static IApplicationBuilder UseRedisMqttServerCluster(this IApplicationBuilder app)
     {
         var server = app.ApplicationServices.GetRequiredService<MqttServer>();
 
