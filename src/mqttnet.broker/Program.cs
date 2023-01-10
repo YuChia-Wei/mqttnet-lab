@@ -1,6 +1,8 @@
+using MQTTnet;
 using MQTTnet.AspNetCore;
 using MQTTnet.AspNetCore.Server.ClusterQueue.Extensions;
 using mqttnet.broker.Events;
+using MQTTnet.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +50,16 @@ app.UseMqttServer(server =>
     server.ClientConnectedAsync += requiredService.OnClientConnected;
     server.ClientDisconnectedAsync += requiredService.OnClientDisconnected;
     server.ValidatingConnectionAsync += requiredService.ValidateConnection;
+});
+
+app.UseInterceptingPublishEvent(eventArgs =>
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+
+    logger.LogInformation(
+        $"[Middleware Interception]\n Client '{eventArgs.ClientId}' publish: {eventArgs.ApplicationMessage.Topic}:{eventArgs.ApplicationMessage.ConvertPayloadToString()}");
+
+    return Task.CompletedTask;
 });
 
 app.UseMqttClusterQueueRedisDb();
