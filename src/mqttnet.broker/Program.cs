@@ -1,8 +1,8 @@
 using MQTTnet;
 using MQTTnet.AspNetCore;
 using MQTTnet.AspNetCore.Server.Cluster.Extensions;
+using MQTTnet.AspNetCore.Server.Extensions;
 using mqttnet.broker.Events;
-using MQTTnet.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
