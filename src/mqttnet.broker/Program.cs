@@ -1,6 +1,6 @@
 using MQTTnet;
 using MQTTnet.AspNetCore;
-using MQTTnet.AspNetCore.Server.ClusterQueue.Extensions;
+using MQTTnet.AspNetCore.Server.Cluster.Extensions;
 using mqttnet.broker.Events;
 using MQTTnet.Internal;
 

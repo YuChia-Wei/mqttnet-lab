@@ -20,8 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MQTTnet.AspNetCore.Client.BackgroundServices\MQTTnet.AspNetCore.Client.BackgroundServices.csproj" />
-      <ProjectReference Include="..\MQTTnet.AspNetCore.Client.DependencyInjection\MQTTnet.AspNetCore.Client.DependencyInjection.csproj" />
+      <ProjectReference Include="..\MQTTnet.AspNetCore.Client\MQTTnet.AspNetCore.Client.csproj" />
     </ItemGroup>
     
 </Project>

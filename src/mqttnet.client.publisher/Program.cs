@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MQTTnet;
-using MQTTnet.AspNetCore.Client.BackgroundServices;
+using MQTTnet.AspNetCore.Client;
 using MQTTnet.AspNetCore.Client.DependencyInjection;
 using MQTTnet.Client;
 using mqttnet.client.publisher;
@@ -21,7 +21,7 @@ builder.Services.AddMqttClient((_, clientOptionBuilder) =>
     // .WithProtocolVersion(MqttProtocolVersion.V500)
 });
 
-builder.Services.AddMqttBackgroundConnectService();
+builder.Services.AddMqttClientBackgroundService();
 
 var app = builder.Build();
 

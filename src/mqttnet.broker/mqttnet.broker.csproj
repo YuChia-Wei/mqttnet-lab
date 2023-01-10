@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MQTTnet.AspNetCore.Server.ClusterQueue\MQTTnet.AspNetCore.Server.ClusterQueue.csproj" />
+      <ProjectReference Include="..\MQTTnet.AspNetCore.Server.Cluster\MQTTnet.AspNetCore.Server.Cluster.csproj" />
     </ItemGroup>
 
 </Project>

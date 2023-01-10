@@ -1,4 +1,4 @@
-﻿namespace MQTTnet.AspNetCore.Server.ClusterQueue.Options;
+﻿namespace MQTTnet.AspNetCore.Server.Cluster.Options;
 
 public class MqttClusterQueueDatabaseOptions
 {

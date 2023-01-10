@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using MQTTnet.AspNetCore.Server.ClusterQueue.Infrastructure;
+using MQTTnet.AspNetCore.Server.Cluster.Infrastructure;
 using MQTTnet.Server;
 
-namespace MQTTnet.AspNetCore.Server.ClusterQueue.Events;
+namespace MQTTnet.AspNetCore.Server.Cluster.Events;
 
 internal sealed class InterceptingPublishEvents
 {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MQTTnet.Server;
 
-namespace MQTTnet.AspNetCore.Server.ClusterQueue.Infrastructure;
+namespace MQTTnet.AspNetCore.Server.Cluster.Infrastructure;
 
 internal interface IMqttClusterQueueDatabase
 {

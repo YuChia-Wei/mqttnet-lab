@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MQTTnet.Server;
 using StackExchange.Redis;
 
-namespace MQTTnet.AspNetCore.Server.ClusterQueue.Infrastructure;
+namespace MQTTnet.AspNetCore.Server.Cluster.Infrastructure;
 
 /// <summary>
 /// Mqtt Cluster Queue Database

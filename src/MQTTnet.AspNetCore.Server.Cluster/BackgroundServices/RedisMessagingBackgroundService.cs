@@ -3,11 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MQTTnet.AspNetCore.Server.ClusterQueue.Infrastructure;
+using MQTTnet.AspNetCore.Server.Cluster.Infrastructure;
 using MQTTnet.Server;
 using StackExchange.Redis;
 
-namespace MQTTnet.AspNetCore.Server.ClusterQueue.BackgroundServices;
+namespace MQTTnet.AspNetCore.Server.Cluster.BackgroundServices;
 
 /// <summary>
 /// Mqtt Client 背景連線服務，讓這個 asp net core server 建立訂閱

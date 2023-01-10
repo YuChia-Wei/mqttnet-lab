@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Hosting;
-using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
 
 namespace MQTTnet.AspNetCore.Client.BackgroundServices;
