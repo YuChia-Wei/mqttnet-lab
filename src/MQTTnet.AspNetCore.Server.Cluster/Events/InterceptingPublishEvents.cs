@@ -7,13 +7,13 @@ namespace MQTTnet.AspNetCore.Server.Cluster.Events;
 internal sealed class InterceptingPublishEvents
 {
     private readonly ILogger<InterceptingPublishEvents> _logger;
-    private readonly IMqttClusterQueueDatabase _mqttCluster;
+    private readonly IMqttQueueDatabase _mqttQueueDatabase;
 
     /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
-    public InterceptingPublishEvents(ILogger<InterceptingPublishEvents> logger, IMqttClusterQueueDatabase mqttCluster)
+    public InterceptingPublishEvents(ILogger<InterceptingPublishEvents> logger, IMqttQueueDatabase mqttQueueDatabase)
     {
         this._logger = logger;
-        this._mqttCluster = mqttCluster;
+        this._mqttQueueDatabase = mqttQueueDatabase;
     }
 
     /// <summary>
@@ -21,19 +21,19 @@ internal sealed class InterceptingPublishEvents
     /// </summary>
     /// <param name="eventArgs"></param>
     /// <returns></returns>
-    public Task PublishToMqttClusterQueueDatabase(InterceptingPublishEventArgs eventArgs)
+    public Task PublishToRedisAsync(InterceptingPublishEventArgs eventArgs)
     {
         this._logger.LogInformation(
             $"Client '{eventArgs.ClientId}' publish: {eventArgs.ApplicationMessage.Topic}:{eventArgs.ApplicationMessage.ConvertPayloadToString()}");
 
-        if (MqttClusterQueueEntity.IsClusterSyncTopic(eventArgs))
+        if (MqttRedisQueueEntity.IsClusterSyncTopic(eventArgs))
         {
-            eventArgs.ApplicationMessage.Topic = MqttClusterQueueEntity.RevertToOriginTopic(eventArgs);
+            eventArgs.ApplicationMessage.Topic = MqttRedisQueueEntity.RevertToOriginTopic(eventArgs);
             this._logger.LogInformation(
                 $"Get Other Broker Message : Client '{eventArgs.ClientId}' publish: {eventArgs.ApplicationMessage.Topic}:{eventArgs.ApplicationMessage.ConvertPayloadToString()}");
             return Task.CompletedTask;
         }
 
-        return this._mqttCluster.PublishAsync(eventArgs);
+        return this._mqttQueueDatabase.PublishAsync(eventArgs);
     }
 }

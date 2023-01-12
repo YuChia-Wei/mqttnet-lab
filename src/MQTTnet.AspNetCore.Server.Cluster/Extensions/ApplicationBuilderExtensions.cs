@@ -13,7 +13,7 @@ public static class ApplicationBuilderExtensions
 
         var publishEvents = app.ApplicationServices.GetRequiredService<InterceptingPublishEvents>();
 
-        server.InterceptingPublishAsync += publishEvents.PublishToMqttClusterQueueDatabase;
+        server.InterceptingPublishAsync += publishEvents.PublishToRedisAsync;
 
         return app;
     }

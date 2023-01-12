@@ -8,9 +8,9 @@ namespace MQTTnet.AspNetCore.Server.Cluster.Infrastructure;
 /// <summary>
 /// Mqtt Cluster Sync Data Entity
 /// </summary>
-internal record MqttClusterQueueEntity
+internal record MqttRedisQueueEntity
 {
-    private static string _clusterSyncTopicSuffixes = "_sync";
+    private static string _queueTopicSyncSuffixes = "_sync";
 
     /// <summary>
     /// 原始發送人
@@ -29,21 +29,21 @@ internal record MqttClusterQueueEntity
 
     public InjectedMqttApplicationMessage CreateInjectedMqttApplicationMessage()
     {
-        this.ApplicationMessage.Topic += _clusterSyncTopicSuffixes;
+        this.ApplicationMessage.Topic += _queueTopicSyncSuffixes;
 
         var injectedMqttApplicationMessage = new InjectedMqttApplicationMessage(this.ApplicationMessage) { SenderClientId = this.OriginPublisher };
         return injectedMqttApplicationMessage;
     }
 
-    public static MqttClusterQueueEntity? Deserialize(RedisValue message)
+    public static MqttRedisQueueEntity? Deserialize(RedisValue message)
     {
-        var mqttSyncData = JsonSerializer.Deserialize<MqttClusterQueueEntity>(message);
+        var mqttSyncData = JsonSerializer.Deserialize<MqttRedisQueueEntity>(message);
         return mqttSyncData;
     }
 
     public static bool IsClusterSyncTopic(InterceptingPublishEventArgs eventArgs)
     {
-        return eventArgs.ApplicationMessage.Topic.EndsWith(_clusterSyncTopicSuffixes);
+        return eventArgs.ApplicationMessage.Topic.EndsWith(_queueTopicSyncSuffixes);
     }
 
     public bool IsSameBroker()
@@ -51,9 +51,9 @@ internal record MqttClusterQueueEntity
         return this.OriginBroker == Environment.MachineName;
     }
 
-    public static MqttClusterQueueEntity ParseToMqttClusterSyncEntity(InterceptingPublishEventArgs eventArgs)
+    public static MqttRedisQueueEntity ParseToMqttClusterSyncEntity(InterceptingPublishEventArgs eventArgs)
     {
-        var mqttSyncData = new MqttClusterQueueEntity
+        var mqttSyncData = new MqttRedisQueueEntity
         {
             OriginPublisher = eventArgs.ClientId,
             OriginBroker = Environment.MachineName,
@@ -64,6 +64,6 @@ internal record MqttClusterQueueEntity
 
     public static string RevertToOriginTopic(InterceptingPublishEventArgs eventArgs)
     {
-        return eventArgs.ApplicationMessage.Topic.Replace(_clusterSyncTopicSuffixes, "");
+        return eventArgs.ApplicationMessage.Topic.Replace(_queueTopicSyncSuffixes, "");
     }
 }

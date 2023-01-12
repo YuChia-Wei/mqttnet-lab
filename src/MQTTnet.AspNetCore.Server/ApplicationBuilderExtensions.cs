@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MQTTnet.Server;
 
-namespace MQTTnet.AspNetCore.Server.Extensions;
+namespace MQTTnet.AspNetCore.Server;
 
 public static class ApplicationBuilderExtensions
 {
@@ -183,6 +183,14 @@ public static class ApplicationBuilderExtensions
     {
         var server = app.ApplicationServices.GetRequiredService<MqttServer>();
         server.LoadingRetainedMessageAsync += eventFunc;
+        return app;
+    }
+
+    public static IApplicationBuilder UseMqttServerEventHandler(
+        this IApplicationBuilder app)
+    {
+        var server = app.ApplicationServices.GetRequiredService<MqttServer>();
+        // server.LoadingRetainedMessageAsync += eventFunc;
         return app;
     }
 

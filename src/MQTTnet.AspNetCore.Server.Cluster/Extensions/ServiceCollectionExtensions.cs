@@ -12,15 +12,15 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddMqttClusterQueueRedisDb(
         this IServiceCollection serviceCollection,
-        Action<MqttClusterQueueDatabaseOptions> action)
+        Action<RedisOptions> action)
     {
-        var clusterQueueDatabaseOptions = new MqttClusterQueueDatabaseOptions();
+        var clusterQueueDatabaseOptions = new RedisOptions();
         action.Invoke(clusterQueueDatabaseOptions);
 
-        serviceCollection.TryAddSingleton<IMqttClusterQueueDatabase, MqttClusterQueueDatabase>();
+        serviceCollection.TryAddSingleton<IMqttQueueDatabase, RedisMqttQueueDatabase>();
         serviceCollection.TryAddSingleton<InterceptingPublishEvents>();
         serviceCollection.TryAddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(clusterQueueDatabaseOptions.RedisConnectionString));
-        serviceCollection.AddHostedService<RedisMessagingBackgroundService>();
+        serviceCollection.AddHostedService<RedisQueueBackgroundService>();
 
         return serviceCollection;
     }

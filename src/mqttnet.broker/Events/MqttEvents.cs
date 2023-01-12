@@ -12,21 +12,21 @@ internal sealed class MqttEvents
         this._logger = logger;
     }
 
-    public Task OnClientConnected(ClientConnectedEventArgs eventArgs)
+    public Task OnClientConnectedAsync(ClientConnectedEventArgs eventArgs)
     {
-        this._logger.LogInformation($"Client '{eventArgs.ClientId}' connected.");
+        this._logger.Log(LogLevel.Information, $"Client '{eventArgs.ClientId}' connected.");
         return Task.CompletedTask;
     }
 
-    public Task OnClientDisconnected(ClientDisconnectedEventArgs eventArgs)
+    public Task OnClientDisconnectedAsync(ClientDisconnectedEventArgs eventArgs)
     {
-        this._logger.LogInformation($"Client '{eventArgs.ClientId}' disconnected.");
+        this._logger.Log(LogLevel.Information, $"Client '{eventArgs.ClientId}' disconnected.");
         return Task.CompletedTask;
     }
 
-    public Task ValidateConnection(ValidatingConnectionEventArgs eventArgs)
+    public Task ValidateConnectionAsync(ValidatingConnectionEventArgs eventArgs)
     {
-        this._logger.LogInformation($"Client '{eventArgs.ClientId}' wants to connect. Accepting!");
+        this._logger.Log(LogLevel.Information, $"Client '{eventArgs.ClientId}' wants to connect. Accepting!");
         return Task.CompletedTask;
     }
 }
