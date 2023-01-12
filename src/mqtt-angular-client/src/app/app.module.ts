@@ -1,32 +1,33 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {IMqttServiceOptions, MqttModule, MqttService} from 'ngx-mqtt';
+import { environment } from 'src/environments/environment';
 
+//REF: https://github.com/emqx/MQTT-Client-Examples/blob/master/mqtt-client-Angular.js/src/app/app.module.ts
+//default connection option
 export const connection: IMqttServiceOptions = {
-  hostname: 'localhost',
-  port: 64430,
+  hostname: environment.mqtthost,
+  port: 443,
   path: '/mqtt',
   clean: true, // Retain session
   connectTimeout: 4000, // Timeout period
   reconnectPeriod: 4000, // Reconnect period
   // Authentication information
-  // clientId: 'mqttx_597046f4',
-  // username: 'emqx_test',
-  // password: 'emqx_test',
-  // protocol: 'ws',
+  //  clientId: '',
+  //  username: '',
+  //  password: '',
   protocol: 'wss',
-}
+  connectOnCreate: false,
+};
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    MqttModule.forRoot(connection)
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, MqttModule.forRoot(connection), FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
