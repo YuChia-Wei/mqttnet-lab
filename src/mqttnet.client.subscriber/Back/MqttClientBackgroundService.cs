@@ -22,8 +22,6 @@ public class MqttClientBackgroundService : BackgroundService
         {
             await this.NormalDisconnection(cancellationToken);
         }
-
-        await this.ServerShuttingDown(cancellationToken);
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -76,18 +74,9 @@ public class MqttClientBackgroundService : BackgroundService
     {
         var disconnectOption = new MqttClientDisconnectOptions()
         {
-            Reason = MqttClientDisconnectReason.NormalDisconnection,
+            // Reason = MqttClientDisconnectReason.NormalDisconnection,
+            Reason = MqttClientDisconnectOptionsReason.NormalDisconnection,
             ReasonString = "NormalDisconnection"
-        };
-        await this._mqttClient.DisconnectAsync(disconnectOption, cancellationToken);
-    }
-
-    private async Task ServerShuttingDown(CancellationToken cancellationToken)
-    {
-        var disconnectOption = new MqttClientDisconnectOptions()
-        {
-            Reason = MqttClientDisconnectReason.ServerShuttingDown,
-            ReasonString = "ServerShuttingDown"
         };
         await this._mqttClient.DisconnectAsync(disconnectOption, cancellationToken);
     }
