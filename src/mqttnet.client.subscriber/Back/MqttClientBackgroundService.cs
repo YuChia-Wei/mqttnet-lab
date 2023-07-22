@@ -76,8 +76,8 @@ public class MqttClientBackgroundService : BackgroundService
     {
         var disconnectOption = new MqttClientDisconnectOptions()
         {
-            Reason = MqttClientDisconnectReason.NormalDisconnection,
-            ReasonString = "NormalDisconnection"
+            // Reason = MqttClientDisconnectReason.NormalDisconnection,
+            Reason = MqttClientDisconnectOptionsReason.NormalDisconnection, ReasonString = "NormalDisconnection"
         };
         await this._mqttClient.DisconnectAsync(disconnectOption, cancellationToken);
     }
@@ -86,8 +86,8 @@ public class MqttClientBackgroundService : BackgroundService
     {
         var disconnectOption = new MqttClientDisconnectOptions()
         {
-            Reason = MqttClientDisconnectReason.ServerShuttingDown,
-            ReasonString = "ServerShuttingDown"
+            // Reason = MqttClientDisconnectReason.ServerShuttingDown,
+            Reason = MqttClientDisconnectOptionsReason.NormalDisconnection, ReasonString = "ServerShuttingDown"
         };
         await this._mqttClient.DisconnectAsync(disconnectOption, cancellationToken);
     }
