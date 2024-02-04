@@ -12,15 +12,15 @@ namespace MQTTnet.AspNetCore.Server.Cluster.BackgroundServices;
 /// <summary>
 /// Mqtt Client 背景連線服務，讓這個 asp net core server 建立訂閱
 /// </summary>
-public class RedisMessagingBackgroundService : BackgroundService
+public class RedisQueueBackgroundService : BackgroundService
 {
     private readonly IConnectionMultiplexer _connectionMultiplexer;
-    private readonly ILogger<RedisMessagingBackgroundService> _logger;
+    private readonly ILogger<RedisQueueBackgroundService> _logger;
     private readonly MqttServer _mqttServer;
 
-    public RedisMessagingBackgroundService(
+    public RedisQueueBackgroundService(
         IConnectionMultiplexer connectionMultiplexer,
-        ILogger<RedisMessagingBackgroundService> logger,
+        ILogger<RedisQueueBackgroundService> logger,
         MqttServer mqttServer)
     {
         this._connectionMultiplexer = connectionMultiplexer;
@@ -47,7 +47,7 @@ public class RedisMessagingBackgroundService : BackgroundService
         this._connectionMultiplexer.GetSubscriber()
             .SubscribeAsync($"{AppDomain.CurrentDomain.FriendlyName}:MqttSync", (channel, message) =>
             {
-                var mqttSyncData = MqttClusterQueueEntity.Deserialize(message);
+                var mqttSyncData = MqttRedisQueueEntity.Deserialize(message);
 
                 if (mqttSyncData == null)
                 {
@@ -70,9 +70,9 @@ public class RedisMessagingBackgroundService : BackgroundService
         return Task.CompletedTask;
     }
 
-    private void PublishFromBroker(MqttClusterQueueEntity mqttClusterQueueEntity, CancellationToken stoppingToken)
+    private void PublishFromBroker(MqttRedisQueueEntity mqttRedisQueueEntity, CancellationToken stoppingToken)
     {
-        var injectedMqttApplicationMessage = mqttClusterQueueEntity.CreateInjectedMqttApplicationMessage();
+        var injectedMqttApplicationMessage = mqttRedisQueueEntity.CreateInjectedMqttApplicationMessage();
 
         this._mqttServer.InjectApplicationMessage(injectedMqttApplicationMessage, stoppingToken);
 

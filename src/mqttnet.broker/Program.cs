@@ -1,7 +1,7 @@
 using MQTTnet;
 using MQTTnet.AspNetCore;
+using MQTTnet.AspNetCore.Server;
 using MQTTnet.AspNetCore.Server.Cluster.Extensions;
-using MQTTnet.AspNetCore.Server.Extensions;
 using mqttnet.broker.Events;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,13 +22,6 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 builder.Services.AddMqttServer();
-// AddMqttServer = 以下兩行
-// builder.Services.AddMqttConnectionHandler();
-// builder.Services.AddHostedMqttServer();
-
-builder.Services.AddConnections();
-
-builder.Services.AddSingleton<MqttEvents>();
 
 builder.Services.AddMqttClusterQueueRedisDb(o =>
 {
@@ -47,9 +40,9 @@ app.MapMqtt("/mqtt");
 app.UseMqttServer(server =>
 {
     var requiredService = app.Services.GetRequiredService<MqttEvents>();
-    server.ClientConnectedAsync += requiredService.OnClientConnected;
-    server.ClientDisconnectedAsync += requiredService.OnClientDisconnected;
-    server.ValidatingConnectionAsync += requiredService.ValidateConnection;
+    server.ClientConnectedAsync += requiredService.OnClientConnectedAsync;
+    server.ClientDisconnectedAsync += requiredService.OnClientDisconnectedAsync;
+    server.ValidatingConnectionAsync += requiredService.ValidateConnectionAsync;
 });
 
 app.UseInterceptingPublishEvent(eventArgs =>

@@ -9,12 +9,12 @@ namespace MQTTnet.AspNetCore.Server.Cluster.Infrastructure;
 /// <summary>
 /// Mqtt Cluster Queue Database
 /// </summary>
-internal sealed class MqttClusterQueueDatabase : IMqttClusterQueueDatabase
+internal sealed class RedisMqttQueueDatabase : IMqttQueueDatabase
 {
     private readonly IConnectionMultiplexer _connectionMultiplexer;
 
     /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
-    public MqttClusterQueueDatabase(IConnectionMultiplexer connectionMultiplexer)
+    public RedisMqttQueueDatabase(IConnectionMultiplexer connectionMultiplexer)
     {
         this._connectionMultiplexer = connectionMultiplexer;
     }
@@ -26,7 +26,7 @@ internal sealed class MqttClusterQueueDatabase : IMqttClusterQueueDatabase
     /// <returns></returns>
     public Task PublishAsync(InterceptingPublishEventArgs eventArgs)
     {
-        var mqttSyncData = MqttClusterQueueEntity.ParseToMqttClusterSyncEntity(eventArgs);
+        var mqttSyncData = MqttRedisQueueEntity.ParseToMqttClusterSyncEntity(eventArgs);
 
         var serialize = JsonSerializer.Serialize(mqttSyncData);
 

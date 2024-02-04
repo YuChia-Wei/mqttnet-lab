@@ -1,9 +1,8 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using MQTTnet.Server;
 using StackExchange.Redis;
 
-namespace MQTTnet.AspNetCore.Server.Cluster.Infrastructure;
+namespace MQTTnet.AspNetCore.Server.@ref.Entities;
 
 /// <summary>
 /// Mqtt Cluster Sync Data Entity
@@ -37,7 +36,12 @@ internal record MqttClusterQueueEntity
 
     public static MqttClusterQueueEntity? Deserialize(RedisValue message)
     {
-        var mqttSyncData = JsonSerializer.Deserialize<MqttClusterQueueEntity>(message);
+        if (message.IsNullOrEmpty)
+        {
+            return new MqttClusterQueueEntity();
+        }
+
+        var mqttSyncData = JsonSerializer.Deserialize<MqttClusterQueueEntity>(message.ToString());
         return mqttSyncData;
     }
 

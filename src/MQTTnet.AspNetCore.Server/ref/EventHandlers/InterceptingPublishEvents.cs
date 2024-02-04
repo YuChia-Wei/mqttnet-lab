@@ -1,19 +1,19 @@
 ﻿using Microsoft.Extensions.Logging;
-using MQTTnet.AspNetCore.Server.Cluster.Infrastructure;
+using MQTTnet.AspNetCore.Server.@ref.Entities;
 using MQTTnet.Server;
 
-namespace MQTTnet.AspNetCore.Server.Cluster.Events;
+namespace MQTTnet.AspNetCore.Server.@ref.EventHandlers;
 
 internal sealed class InterceptingPublishEvents
 {
     private readonly ILogger<InterceptingPublishEvents> _logger;
-    private readonly IMqttQueueDatabase _mqttQueueDatabase;
+    private readonly RedisQueuePublisher _redisQueuePublisher;
 
     /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
-    public InterceptingPublishEvents(ILogger<InterceptingPublishEvents> logger, IMqttQueueDatabase mqttQueueDatabase)
+    public InterceptingPublishEvents(ILogger<InterceptingPublishEvents> logger, RedisQueuePublisher redisQueuePublisher)
     {
         this._logger = logger;
-        this._mqttQueueDatabase = mqttQueueDatabase;
+        this._redisQueuePublisher = redisQueuePublisher;
     }
 
     /// <summary>
@@ -21,19 +21,19 @@ internal sealed class InterceptingPublishEvents
     /// </summary>
     /// <param name="eventArgs"></param>
     /// <returns></returns>
-    public Task PublishToRedisAsync(InterceptingPublishEventArgs eventArgs)
+    public Task PublishToRedisQueueAsync(InterceptingPublishEventArgs eventArgs)
     {
         this._logger.LogInformation(
             $"Client '{eventArgs.ClientId}' publish: {eventArgs.ApplicationMessage.Topic}:{eventArgs.ApplicationMessage.ConvertPayloadToString()}");
 
-        if (MqttRedisQueueEntity.IsClusterSyncTopic(eventArgs))
+        if (MqttClusterQueueEntity.IsClusterSyncTopic(eventArgs))
         {
-            eventArgs.ApplicationMessage.Topic = MqttRedisQueueEntity.RevertToOriginTopic(eventArgs);
+            eventArgs.ApplicationMessage.Topic = MqttClusterQueueEntity.RevertToOriginTopic(eventArgs);
             this._logger.LogInformation(
                 $"Get Other Broker Message : Client '{eventArgs.ClientId}' publish: {eventArgs.ApplicationMessage.Topic}:{eventArgs.ApplicationMessage.ConvertPayloadToString()}");
             return Task.CompletedTask;
         }
 
-        return this._mqttQueueDatabase.PublishAsync(eventArgs);
+        return this._redisQueuePublisher.PublishAsync(eventArgs);
     }
 }

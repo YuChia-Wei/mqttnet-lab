@@ -3,7 +3,7 @@ using MQTTnet.Server;
 
 namespace MQTTnet.AspNetCore.Server.Cluster.Infrastructure;
 
-internal interface IMqttClusterQueueDatabase
+internal interface IMqttQueueDatabase
 {
     /// <summary>
     /// Publish to other broker

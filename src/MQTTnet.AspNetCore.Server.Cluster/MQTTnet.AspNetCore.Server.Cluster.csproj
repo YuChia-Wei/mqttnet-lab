@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MQTTnet" Version="4.2.0.706" />
-        <PackageReference Include="MQTTnet.AspNetCore" Version="4.2.0.706" />
-        <PackageReference Include="StackExchange.Redis" Version="2.6.104" />
+        <PackageReference Include="MQTTnet" Version="4.2.1.781" />
+        <PackageReference Include="MQTTnet.AspNetCore" Version="4.2.1.781" />
+        <PackageReference Include="StackExchange.Redis" Version="2.6.122" />
     </ItemGroup>
 
 </Project>
