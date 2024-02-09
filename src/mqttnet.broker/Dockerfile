@@ -1,9 +1,10 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+﻿FROM ghcr.io/yuchia-wei/otel-dotnet-auto-instrumentation:8.0-alpine AS base
 WORKDIR /app
 EXPOSE 80
+EXPOSE 8080
 EXPOSE 1883
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 WORKDIR /src
 COPY ["mqttnet.broker/mqttnet.broker.csproj", "mqttnet.broker/"]
 COPY ["MQTTnet.AspNetCore.Server.ClusterQueue/MQTTnet.AspNetCore.Server.ClusterQueue.csproj", "MQTTnet.AspNetCore.Server.ClusterQueue/"]

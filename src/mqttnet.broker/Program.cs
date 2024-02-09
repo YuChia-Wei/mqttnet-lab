@@ -19,6 +19,7 @@ builder.WebHost.ConfigureKestrel(options =>
 
     // link = ws://{host}:80
     options.ListenAnyIP(80);
+    options.ListenAnyIP(8080);
 });
 
 builder.Services.AddMqttServer();
