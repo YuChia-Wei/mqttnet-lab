@@ -7,17 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "broker", "broker", "{2E635A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{E5B9AC3C-FA8A-4283-9387-D473DE5D648B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{505CBEAD-3D57-4E9F-9163-B48603C7431A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget-packages", "nuget-packages", "{505CBEAD-3D57-4E9F-9163-B48603C7431A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTnet.AspNetCore.Client", "MQTTnet.AspNetCore.Client\MQTTnet.AspNetCore.Client.csproj", "{D019A03B-CE81-40F9-B4FD-31EB3D966115}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTnet.AspNetCore.Client", "nuget-packages\MQTTnet.AspNetCore.Client\MQTTnet.AspNetCore.Client.csproj", "{D019A03B-CE81-40F9-B4FD-31EB3D966115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTnet.AspNetCore.Server.Cluster", "MQTTnet.AspNetCore.Server.Cluster\MQTTnet.AspNetCore.Server.Cluster.csproj", "{610C385C-51F1-4900-B6D5-888B029CC95F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTnet.AspNetCore.Server.Cluster", "nuget-packages\MQTTnet.AspNetCore.Server.Cluster\MQTTnet.AspNetCore.Server.Cluster.csproj", "{610C385C-51F1-4900-B6D5-888B029CC95F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.client.publisher", "mqttnet.client.publisher\mqttnet.client.publisher.csproj", "{63C0AC29-82DD-4B70-A61A-58E160A18DA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.client.publisher", "clients\mqttnet.client.publisher\mqttnet.client.publisher.csproj", "{63C0AC29-82DD-4B70-A61A-58E160A18DA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.client.subscriber", "mqttnet.client.subscriber\mqttnet.client.subscriber.csproj", "{67766E69-8AC8-4CD7-9624-865F53DBD672}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttnet.client.subscriber", "clients\mqttnet.client.subscriber\mqttnet.client.subscriber.csproj", "{67766E69-8AC8-4CD7-9624-865F53DBD672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTnet.AspNetCore.Server", "MQTTnet.AspNetCore.Server\MQTTnet.AspNetCore.Server.csproj", "{DA161E1C-7890-4724-B160-537F6E76F3BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTnet.AspNetCore.Server", "nuget-packages\MQTTnet.AspNetCore.Server\MQTTnet.AspNetCore.Server.csproj", "{DA161E1C-7890-4724-B160-537F6E76F3BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

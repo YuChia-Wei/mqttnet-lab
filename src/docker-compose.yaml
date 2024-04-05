@@ -31,7 +31,7 @@ services:
       - broker=broker_1
     build:
       context: ../src
-      dockerfile: mqttnet.client.publisher/Dockerfile
+      dockerfile: clients/mqttnet.client.publisher/Dockerfile
     ports:
       - "7227:80"
     networks:
@@ -45,7 +45,7 @@ services:
       - broker=broker_2
     build:
       context: ../src
-      dockerfile: mqttnet.client.publisher/Dockerfile
+      dockerfile: clients/mqttnet.client.publisher/Dockerfile
     ports:
       - "7228:80"
     networks:

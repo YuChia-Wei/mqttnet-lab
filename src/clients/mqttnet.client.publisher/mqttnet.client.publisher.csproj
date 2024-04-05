@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
+      <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MQTTnet.AspNetCore.Client\MQTTnet.AspNetCore.Client.csproj" />
+      <ProjectReference Include="..\..\nuget-packages\MQTTnet.AspNetCore.Client\MQTTnet.AspNetCore.Client.csproj" />
     </ItemGroup>
     
 </Project>

@@ -19,8 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MQTTnet.AspNetCore.Server.Cluster\MQTTnet.AspNetCore.Server.Cluster.csproj" />
-      <ProjectReference Include="..\MQTTnet.AspNetCore.Server\MQTTnet.AspNetCore.Server.csproj" />
+      <ProjectReference Include="..\nuget-packages\MQTTnet.AspNetCore.Server.Cluster\MQTTnet.AspNetCore.Server.Cluster.csproj" />
+      <ProjectReference Include="..\nuget-packages\MQTTnet.AspNetCore.Server\MQTTnet.AspNetCore.Server.csproj" />
     </ItemGroup>
 
 </Project>
